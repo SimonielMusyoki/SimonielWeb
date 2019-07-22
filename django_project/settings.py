@@ -25,7 +25,7 @@ SECRET_KEY = '19bg*ddweqtr!+mi#g^(bz9p3_j#0%-w!bh12)m%40s$6%@oq%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sleepy-shore-44577.herokuapp.com']
 
 
 # Application definition
@@ -40,10 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'herokuapp',
+    
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,3 +135,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+import db.sqlite3 
+prod_db  =  db.sqlite3.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
